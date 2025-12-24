@@ -4,13 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch \"./src/**\" ./server.ts"
+    "dev": "nodemon --watch \"./src/**\" ./server.ts",
+    "app:up": "docker-compose up --build -d",
+    "app:down": "docker-compose down",
+    "db:up": "docker-compose -f docker-compose.db.yml up -d",
+    "db:down": "docker-compose -f docker-compose.db.yml down",
+    "docker:migrate": "docker-compose exec app npx prisma migrate dev",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^7.2.0",
+    "@prisma/client": "^6.19.1",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -19,7 +25,7 @@
     "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.11",
-    "prisma": "^7.2.0"
+    "prisma": "^6.19.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
