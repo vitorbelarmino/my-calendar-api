@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { App } from "./App";
 
 const apiPort = process.env.API_PORT || 3333;

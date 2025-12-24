@@ -1,13 +1,19 @@
 import { NextFunction, Request, Response } from "express";
+import { HttpError } from "http-errors";
 
 class GlobalError {
-  static handleError(err: any, _req: Request, res: Response, _next: NextFunction): void {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+  static handleError(err: Error, _req: Request, res: Response, _next: NextFunction) {
+    if (err instanceof HttpError) {
+      res.status(err.statusCode).json({
+        message: err.message,
+      });
+      return;
+    }
 
-    res.status(status).json({
-      type: err.name,
-      message: message,
+    console.error(err);
+
+    res.status(500).json({
+      message: "Internal Server Error",
     });
   }
 }
