@@ -8,7 +8,8 @@ interface IUser {
 }
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
-const ACCESS_TOKEN_EXPIRATION = "15m";
+// const ACCESS_TOKEN_EXPIRATION = "15m";
+const ACCESS_TOKEN_EXPIRATION = "7d";
 const REFRESH_TOKEN_EXPIRATION = "7d";
 
 export class Token {
