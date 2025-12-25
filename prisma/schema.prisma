@@ -31,7 +31,7 @@ model Event {
   description String
   themeColor  String   @map("theme_color") 
   date        DateTime 
-  hour        DateTime 
+  hour        String   
   userId      String   @map("user_id")
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now()) @map("created_at")
