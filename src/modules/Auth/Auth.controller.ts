@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import authService from "./Auth.service";
+import { getUserId } from "../../Utils/GetUserId";
+import userService from "../User/User.service";
 
 class AuthController {
   async login(req: Request, res: Response) {
@@ -24,6 +26,14 @@ class AuthController {
     const result = await authService.refreshToken(refreshToken);
 
     return res.status(200).json(result);
+  }
+
+  async getMe(req: Request, res: Response) {
+    const userId = getUserId(req);
+
+    const user = await userService.findById(userId);
+
+    return res.status(200).json(user);
   }
 }
 
