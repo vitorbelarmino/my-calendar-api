@@ -41,7 +41,7 @@ class EventService {
     const events = await this.db.event.findMany({
       where: { userId },
       select: EVENT_SELECT,
-      orderBy: { date: "asc" },
+      orderBy: [{ date: "asc" }, { hour: "asc" }],
     });
 
     return events.map(formatEvent);
