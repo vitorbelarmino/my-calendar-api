@@ -15,6 +15,13 @@ const EVENT_SELECT = {
   updatedAt: true,
 } as const;
 
+import { DateFormatter } from "../../Utils/DateFormatter";
+
+export const formatEvent = (event: any) => ({
+  ...event,
+  date: DateFormatter.toYYYYMMDD(event.date),
+});
+
 class EventService {
   constructor(private db = prisma) {}
 
@@ -27,15 +34,17 @@ class EventService {
       select: EVENT_SELECT,
     });
 
-    return event;
+    return formatEvent(event);
   }
 
   async findAllByUser(userId: string) {
-    return this.db.event.findMany({
+    const events = await this.db.event.findMany({
       where: { userId },
       select: EVENT_SELECT,
       orderBy: { date: "asc" },
     });
+
+    return events.map(formatEvent);
   }
 
   async findById(id: string, userId: string) {
@@ -50,7 +59,7 @@ class EventService {
       throw createError(403, "You can only access your own events");
     }
 
-    return event;
+    return formatEvent(event);
   }
 
   async update(id: string, userId: string, data: UpdateEventDTO) {
@@ -62,11 +71,13 @@ class EventService {
       throw createError(403, "You can only update your own events");
     }
 
-    return this.db.event.update({
+    const updated = await this.db.event.update({
       where: { id },
       data,
       select: EVENT_SELECT,
     });
+
+    return formatEvent(updated);
   }
 
   async delete(id: string, userId: string) {

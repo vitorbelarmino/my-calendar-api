@@ -23,11 +23,15 @@ export const createEventSchema = Joi.object({
         "Theme color must be one of: blue, red, green, yellow, purple, pink, orange, teal",
       "any.required": "Theme color is required",
     }),
-  date: Joi.date().iso().required().messages({
-    "date.base": "Date must be a valid date",
-    "date.format": "Date must be in ISO format",
-    "any.required": "Date is required",
-  }),
+  date: Joi.string()
+    .pattern(/^\d{4}-\d{2}-\d{2}$/)
+    .required()
+    .messages({
+      "string.base": "Date must be a string",
+      "string.empty": "Date is required",
+      "string.pattern.base": "Date must be in format YYYY-MM-DD",
+      "any.required": "Date is required",
+    }),
   hour: Joi.string()
     .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
     .required()
@@ -56,10 +60,13 @@ export const updateEventSchema = Joi.object({
       "any.only":
         "Theme color must be one of: blue, red, green, yellow, purple, pink, orange, teal",
     }),
-  date: Joi.date().iso().optional().messages({
-    "date.base": "Date must be a valid date",
-    "date.format": "Date must be in ISO format",
-  }),
+  date: Joi.string()
+    .pattern(/^\d{4}-\d{2}-\d{2}$/)
+    .optional()
+    .messages({
+      "string.base": "Date must be a string",
+      "string.pattern.base": "Date must be in format YYYY-MM-DD",
+    }),
   hour: Joi.string()
     .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
     .optional()
