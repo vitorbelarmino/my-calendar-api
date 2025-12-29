@@ -93,14 +93,17 @@ npm run docker:migrate
 # API disponível em http://localhost:3333
 ```
 
-### Rodando localmente (sem Docker)
+
+### Rodando localmente
 ```bash
 # Instale dependências
 npm install
 
 # Configure o .env (veja exemplo acima)
 
-# Suba o banco manualmente (MySQL)
+# Suba o banco de dados (recomendado via Docker Compose)
+npm run db:up
+# Ou suba manualmente um MySQL local
 # Atualize DATABASE_URL no .env para apontar para seu banco local
 
 # Rode as migrations
