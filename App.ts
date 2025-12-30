@@ -7,7 +7,12 @@ export class App {
   public app: express.Application;
   constructor() {
     this.app = express();
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: true,
+        credentials: true,
+      }),
+    );
     this.app.use(express.json());
     this.app.use("/", routes);
     this.app.use(GlobalError.handleError);
